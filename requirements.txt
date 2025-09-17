@@ -1,0 +1,51 @@
+# Free-Threaded Python Performance Testing Requirements
+
+# Core ML and Data Libraries
+numpy>=1.24.0,<3.0  # Pin numpy to avoid compatibility issues
+pandas>=2.0.0
+scikit-learn>=1.3.0
+
+# WoeBoost Library (main subject of testing)
+# woeboost>=0.1.0  # Commented out - install separately if available
+
+# Visualization Libraries
+matplotlib>=3.6.0
+seaborn>=0.12.0
+
+# System Monitoring
+psutil>=5.9.0
+
+# Configuration and Orchestration
+pyyaml>=6.0.0
+
+# Development Tools
+ruff>=0.1.0
+
+# Optional: For better testing experience
+# uv>=0.1.0  # For installing free-threaded Python
+# ipython>=8.0.0  # For interactive testing
+
+# Installation Notes:
+# ==================
+# 
+# For standard Python environments:
+#   pip install -r requirements.txt
+#   pip install woeboost  # Install WoeBoost if available
+#
+# For free-threaded Python environments:
+#   # Some packages may have compatibility issues
+#   # Install core dependencies first:
+#   pip install numpy pandas scikit-learn matplotlib psutil
+#   
+#   # Then try WoeBoost (may need special handling):
+#   pip install woeboost --no-deps  # If compatibility issues
+#   
+# Alternative for problematic environments:
+#   # Use Python 3.13.2+freethreaded instead of 3.14.0a5+freethreaded
+#   # Or use conda-forge: conda install -c conda-forge pandas scikit-learn
+#
+# Virtual Environment Setup:
+#   python3 -m venv venv
+#   source venv/bin/activate  # or: ./setup_venv.sh
+#   pip install -r requirements.txt
+
