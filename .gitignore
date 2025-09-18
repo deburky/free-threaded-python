@@ -107,3 +107,5 @@ MIGRATION_SUMMARY.md
 !pyproject.toml
 
 article_images/
+.ruff_cache/
+outputs/
