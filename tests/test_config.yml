@@ -1,0 +1,172 @@
+# WoeBoost Free-Threading Test Suite Configuration
+# This file defines all test configurations and expected results
+
+metadata:
+  name: "WoeBoost Free-Threading Performance Test Suite"
+  version: "1.0.0"
+  description: "Comprehensive test suite to validate free-threading performance claims"
+  author: "Performance Testing Suite"
+  article_claims:
+    training_time_speedup: 3.67
+    iteration_time_speedup: 3.7
+    cpu_utilization_improvement: "25% → 80%"
+    time_reduction_percentage: 60
+
+# Environment Configuration
+environment:
+  python_version_min: "3.13"
+  required_packages:
+    - name: "woeboost"
+      min_version: "0.1.0"
+    - name: "pandas"
+      min_version: "1.5.0"
+    - name: "scikit-learn"
+      min_version: "1.0.0"
+    - name: "numpy"
+      min_version: "1.24.0"
+      max_version: "3.0"
+    - name: "matplotlib"
+      min_version: "3.5.0"
+    - name: "seaborn"
+      min_version: "0.11.0"
+    - name: "psutil"
+      min_version: "5.8.0"
+
+# Test Definitions
+tests:
+  # Environment Verification Tests
+  environment_verification:
+    name: "Environment Verification"
+    description: "Verify Python version, free-threading support, and package installations"
+    enabled: true
+    timeout: 30
+    checks:
+      - name: "python_version"
+        description: "Check Python version >= 3.13"
+        critical: true
+      - name: "free_threading_support"
+        description: "Verify GIL can be disabled"
+        critical: true
+      - name: "package_installations"
+        description: "Verify all required packages are installed"
+        critical: true
+      - name: "woeboost_functionality"
+        description: "Test basic WoeBoost functionality"
+        critical: true
+
+  # Performance Benchmarks
+  woeboost_benchmark:
+    name: "WoeBoost Performance Benchmark"
+    description: "Benchmark WoeBoost training performance"
+    enabled: true
+    timeout: 120
+    dataset:
+      n_samples: 10000
+      n_features: 20
+      n_informative: 15
+      n_redundant: 5
+      random_state: 42
+    expected_results:
+      training_time_range: [0.1, 2.0]  # seconds
+      time_per_iteration_range: [0.001, 0.05]  # seconds
+      success_rate: 1.0
+
+  threading_benchmark:
+    name: "Threading Performance Comparison"
+    description: "Compare single vs multi-threaded performance"
+    enabled: true
+    timeout: 60
+    config:
+      threads: 4  # Fixed for apples-to-apples comparison
+      iterations: 1000
+      task_complexity: "medium"
+    expected_results:
+      single_threaded_baseline: true
+      multi_threaded_speedup_min: 0.5  # May be slower due to GIL
+      cpu_usage_increase: true
+
+  # Data Generation Tests
+  data_generation:
+    name: "Test Data Generation"
+    description: "Generate various test datasets"
+    enabled: true
+    timeout: 30
+    presets:
+      small:
+        n_samples: 1000
+        n_features: 10
+        n_informative: 8
+        description: "Quick testing dataset"
+      medium:
+        n_samples: 10000
+        n_features: 20
+        n_informative: 15
+        description: "Article benchmark dataset"
+      large:
+        n_samples: 100000
+        n_features: 50
+        n_informative: 30
+        description: "Stress testing dataset"
+
+  # Visualization Tests
+  visualization:
+    name: "Performance Visualization"
+    description: "Generate performance comparison charts"
+    enabled: true
+    timeout: 45
+    charts:
+      - name: "performance_comparison"
+        type: "bar_chart"
+        metrics: ["training_time", "iteration_time", "effective_parallelism"]
+      - name: "resource_utilization"
+        type: "bar_chart"
+        metrics: ["cpu_usage", "threads_used", "speedup_factor"]
+      - name: "metrics_table"
+        type: "table"
+        data_source: "article_claims"
+      - name: "training_convergence"
+        type: "animation"
+        enabled: false  # Optional, resource intensive
+
+# Expected Results (for validation)
+expected_performance:
+  article_claims:
+    gil_performance:
+      training_time: 0.69
+      time_per_iteration: 0.0137
+      cpu_usage: 25.0
+      threads_used: 4
+      speedup_ratio: 1.0
+    nogil_performance:
+      training_time: 0.19
+      time_per_iteration: 0.0037
+      cpu_usage: 80.0
+      threads_used: 4
+      speedup_ratio: 3.67
+    improvements:
+      training_speedup: 3.67
+      iteration_speedup: 3.7
+      time_saved: 0.50
+      reduction_percentage: 60
+
+# Output Configuration
+output:
+  results_dir: "test_results"
+  plots_dir: "plots"
+  logs_dir: "logs"
+  formats:
+    - "json"
+    - "csv" 
+    - "png"
+  save_intermediate: true
+  verbose: true
+
+# Advanced Configuration
+advanced:
+  parallel_execution: false  # Run tests sequentially for now
+  retry_failed_tests: true
+  max_retries: 2
+  cleanup_temp_files: true
+  generate_report: true
+  report_format: "markdown"
+

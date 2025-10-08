@@ -1,0 +1,79 @@
+# Python 3.14 Free-threaded Test Configuration
+# Optimized for testing Python 3.14 free-threaded performance characteristics
+
+environment:
+  python_version_min: "3.14"
+  require_free_threading: true  # Free-threaded version should have free-threading
+  required_packages:
+    - name: "numpy"
+    - name: "pandas"
+    - name: "sklearn"
+    - name: "matplotlib"
+    - name: "seaborn"
+    - name: "psutil"
+    - name: "yaml"
+
+output:
+  results_dir: "article_images/results_freethreaded"
+  plots_dir: "article_images/plots_freethreaded"
+  logs_dir: "article_images/logs_freethreaded"
+  formats: ["json", "csv"]
+
+tests:
+  environment_verification:
+    enabled: true
+    description: "Verify Python 3.14 free-threaded environment and dependencies"
+
+  woeboost_benchmark:
+    enabled: false  # Disabled due to compatibility issues
+    description: "WoeBoost performance benchmark on Python 3.14 free-threaded (disabled - compatibility issues)"
+
+  threading_benchmark:
+    enabled: true
+    description: "Threading performance test on Python 3.14 free-threaded"
+    config:
+      threads: 4
+      iterations: 500000
+
+  data_generation:
+    enabled: true
+    description: "Generate test datasets for Python 3.14 free-threaded"
+    presets:
+      small:
+        n_samples: 1000
+        n_features: 10
+        n_informative: 8
+        description: "Small dataset for quick tests"
+      medium:
+        n_samples: 10000
+        n_features: 20
+        n_informative: 15
+        description: "Medium dataset for standard tests"
+
+  visualization:
+    enabled: true
+    description: "Generate performance visualizations"
+
+# Expected performance improvements for Python 3.14 free-threaded
+expected_performance:
+  freethreaded_claims:
+    # Free-threaded Python improvements over standard Python
+    improvements:
+      threading_efficiency: 2.5  # 2.5x better threading efficiency
+      cpu_utilization: 3.4       # 3.4x better CPU utilization
+      parallel_performance: 2.0  # 2x better parallel performance
+    
+    # Specific performance metrics for Python 3.14 free-threaded
+    freethreaded_performance:
+      training_time: 1.2         # seconds (theoretical)
+      time_per_iteration: 0.024  # seconds (theoretical)
+      speedup_ratio: 2.5         # theoretical speedup
+      cpu_utilization: 85.0      # percentage (theoretical)
+      memory_usage: 160.0        # MB (theoretical)
+
+# Advanced configuration
+advanced:
+  generate_report: true
+  save_plots: true
+  verbose_logging: false
+  parallel_execution: true  # Enable for free-threaded testing

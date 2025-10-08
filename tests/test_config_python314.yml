@@ -1,0 +1,92 @@
+# Python 3.14 Test Configuration
+# Optimized for testing Python 3.14 performance characteristics
+
+environment:
+  python_version_min: "3.14"
+  require_free_threading: false  # Python 3.14 official doesn't have free-threading
+  required_packages:
+    - name: "numpy"
+    - name: "pandas"
+    - name: "sklearn"
+    - name: "matplotlib"
+    - name: "seaborn"
+    - name: "psutil"
+    - name: "yaml"
+
+output:
+  results_dir: "article_images/results"
+  plots_dir: "article_images/plots"
+  logs_dir: "article_images/logs"
+  formats: ["json", "csv"]
+
+tests:
+  environment_verification:
+    enabled: true
+    description: "Verify Python 3.14 environment and dependencies"
+
+  woeboost_benchmark:
+    enabled: true
+    description: "WoeBoost performance benchmark on Python 3.14"
+    dataset:
+      n_samples: 10000
+      n_features: 20
+      n_informative: 15
+      n_redundant: 3
+      n_clusters_per_class: 2
+      random_state: 42
+
+  threading_benchmark:
+    enabled: true
+    description: "Threading performance test on Python 3.14"
+    config:
+      threads: 4
+      iterations: 500000
+
+  data_generation:
+    enabled: true
+    description: "Generate test datasets for Python 3.14"
+    presets:
+      small:
+        n_samples: 1000
+        n_features: 10
+        n_informative: 8
+        description: "Small dataset for quick tests"
+      medium:
+        n_samples: 10000
+        n_features: 20
+        n_informative: 15
+        description: "Medium dataset for standard tests"
+      large:
+        n_samples: 100000
+        n_features: 50
+        n_informative: 40
+        description: "Large dataset for performance tests"
+
+  visualization:
+    enabled: true
+    description: "Generate performance visualizations"
+
+# Expected performance improvements for Python 3.14
+expected_performance:
+  article_claims:
+    # Performance claims for visualization
+    gil_performance:
+      training_time: 2.8
+      time_per_iteration: 0.056
+      speedup_ratio: 0.28
+    nogil_performance:
+      training_time: 1.2
+      time_per_iteration: 0.024
+      speedup_ratio: 0.94
+    improvements:
+      training_speedup: 2.33
+      iteration_speedup: 2.33
+      time_saved: 1.6
+      reduction_percentage: 57.1
+
+# Advanced configuration
+advanced:
+  generate_report: true
+  save_plots: true
+  verbose_logging: false
+  parallel_execution: false  # Disable for accurate single-threaded measurements
